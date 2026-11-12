@@ -6,6 +6,8 @@ import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Lifecycle
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             BIND_AUTO_CREATE
         )
 
-        findViewById<Button>(R.id.startButton).setOnClickListener {
+        findViewById<Button>(R.id.action_start_timer).setOnClickListener {
             timerBinder?.run {
                 if(!isRunning) {
                     timerBinder?.start(100)
@@ -69,10 +71,28 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        
+
         findViewById<Button>(R.id.stopButton).setOnClickListener {
             timerBinder?.stop()
-            findViewById<Button>(R.id.startButton).text = "Start"
+            findViewById<Button>(R.id.action_start_timer).text = "Start"
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem)
+        =  when (item.itemId) {
+            R.id.action_start_timer -> {
+                timerBinder?.start(100);
+                true
+            }
+
+            R.id.action_stop_timer -> {
+                timerBinder?.stop()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
     }
 }
