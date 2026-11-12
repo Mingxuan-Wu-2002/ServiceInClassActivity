@@ -93,6 +93,6 @@ class MainActivity : AppCompatActivity() {
                 timerBinder?.stop()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
     }
 }
